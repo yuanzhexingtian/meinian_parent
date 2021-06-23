@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.TravelGroupDao">
+
+    <insert id="setTravelGroupAndTravelItem">
+        insert into t_travelgroup_travelitem(travelgroup_id,travelitem_id) values(#{travelGroup},#{travelItem})
+    </insert>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into t_travelgroup(code, name, helpCode, sex, remark, attention)
+        values(#{code}, #{name}, #{helpCode}, #{sex}, #{remark}, #{attention})
+    </insert>
+    <update id="edit">
+        update t_travelgroup
+        <set>
+            code=#{code},
+            name=#{name},
+            helpCode=#{helpCode},
+            sex=#{sex},
+            remark=#{remark},
+            attention=#{attention},
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteTravelItemIdByTravelgroupId">
+        delete from t_travelgroup_travelitem where travelgroup_id=#{id}
+    </delete>
+
+    <select id="findPage" resultType="travelGroup">
+        select * from t_travelgroup
+        <where>
+            <if test="value !=null and value.length>0 ">
+                code=#{queryString} or name like concat('%',#{queryString},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="TravelGroup">
+        select * from t_travelgroup where id= #{id}
+    </select>
+
+    <select id="findTravelItemIdByTravelgroupId" resultType="int">
+        select travelitem_id from t_travelgroup_travelitem where travelgroup_id=#{id}
+    </select>
+
+    <select id="findAllGroup" resultType="TravelGroup">
+        select *  from t_travelgroup
+    </select>
+
+</mapper>
+
+
+

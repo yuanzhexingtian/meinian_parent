@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.OrderSettingDao">
+
+    <insert id="add">
+        insert into t_ordersetting(orderDate, number, reservations)
+        values(#{orderDate}, #{number}, #{reservations})
+    </insert>
+
+    <update id="editNumberByOrderDate">
+        update t_ordersetting set number=#{number} where orderDate=#{orderDate}
+    </update>
+
+    <select id="findCountByOrderDate" resultType="java.lang.Long">
+        select count(*) from t_ordersetting where orderDate=#{orderDate}
+    </select>
+
+    <select id="getOrderSettingByMonth" resultType="OrderSetting">
+        select * from t_ordersetting where orderDate=#{orderDate}
+    </select>
+
+
+</mapper>

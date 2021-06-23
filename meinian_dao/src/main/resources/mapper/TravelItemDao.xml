@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.TravelItemDao">
+    <!--新增-->
+    <insert id="add" parameterType="travelItem">
+        insert into t_travelitem(code,name,sex,age,price,type,remark,attention)
+        values
+        (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
+    </insert>
+    <update id="edit">
+        update t_travelitem
+        <set>
+           code=#{code},
+           name=#{name},
+           sex=#{sex},
+           age=#{age},
+           price=#{price},
+           type=#{type},
+           remark=#{remark},
+           attention=#{attention},
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from t_travelitem where id=#{id}
+    </delete>
+
+    <select id="findPage" resultType="travelItem">
+        select id,code,name,sex,age,price,type,remark,attention from t_travelitem
+        <where>
+            <if test="value !=null and value.length>0 ">
+                code=#{queryString} or name like concat('%',#{queryString},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findRelationship" resultType="Integer">
+        select count(*) from t_travelgroup_travelitem where travelitem_id=#{id}
+    </select>
+
+    <select id="findById" resultType="travelItem">
+        select id,code,name,sex,age,price,type,remark,attention from t_travelitem
+        where id=#{id}
+    </select>
+    <select id="findAll" resultType="travelItem">
+        select * from t_travelitem
+    </select>
+</mapper>
+
